@@ -85,7 +85,7 @@ class SelfAutocompleteCommand(BaseCommand):
         path.write_text(script)
         path.chmod(0o777)
 
-        rc_path = Path.home() / '.zshrc'
+        rc_path = Path(os.environ.get('ZDOTDIR', Path.home())) / '.zshrc'
         if str(path) not in rc_path.read_text():
             with rc_path.open('a') as stream:
                 stream.write('\n\nsource "{}"\n'.format(str(path)))
